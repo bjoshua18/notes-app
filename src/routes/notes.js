@@ -2,10 +2,12 @@ const router = require('express').Router() // Para crear rutas
 
 const Note = require('../models/Note')
 
+// Agregar nota
 router.get('/notes/add', (req, res) => {
 	res.render('notes/new-note')
 })
 
+// Guardar nota
 router.post('/notes/new-note', async (req, res) => {
 	const { title, description } = req.body // Obtenemos el titulo y la descripcion del formulario enviado
 
@@ -31,9 +33,23 @@ router.post('/notes/new-note', async (req, res) => {
 	}
 })
 
+// Mostrar todas las notas
 router.get('/notes', async (req, res) => {
 	const notes = await	Note.find().sort({date: 'desc'}) // Obtenemos todas las notas
 	res.render('notes/all-notes', { notes }) // Renderizamos la vista con todas las notas
+})
+
+// Editar nota
+router.get('/notes/edit/:id', async (req, res) => {
+	const note = await Note.findById(req.params.id)
+	res.render('notes/edit-note', {note})
+})
+
+// Actualizar los datos de la nota
+router.put('/notes/edit-note/:id', async (req, res) => {
+	const { title, description } = req.body
+	await Note.findByIdAndUpdate(req.params.id, { title, description })
+	res.redirect('/notes')
 })
 
 module.exports = router; // Exportamos el router
