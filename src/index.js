@@ -14,7 +14,7 @@ app.set('views', path.join(__dirname, 'views')) // Indicamos la ruta de la carpe
 
 app.engine('.hbs', exphbs({ // Indicamos el motor de plantillas
 	defaultLayout: 'main', // El nombre del layout por defecto
-	layoutsDir: path.join(app.get('views'), 'layout'), // La ruta de la carpeta 'layout'
+	layoutsDir: path.join(app.get('views'), 'layouts'), // La ruta de la carpeta 'layout'
 	partialsDir: path.join(app.get('views'), 'partials'), // La ruta de la carpeta 'partials',
 	extname: '.hbs' // La extension de los archivos
 }))

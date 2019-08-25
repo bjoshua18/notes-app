@@ -1,11 +1,11 @@
 const router = require('express').Router() // Para crear rutas
 
 router.get('/', (req, res) => {
-	res.send('Index')
+	res.render('index')
 })
 
 router.get('/about', (req, res) => {
-	res.send('About')
+	res.render('about')
 })
 
 module.exports = router; // Exportamos el router
