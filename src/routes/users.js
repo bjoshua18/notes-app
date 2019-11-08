@@ -1,9 +1,18 @@
 const router = require('express').Router() // Para crear rutas
+const passport = require('passport')
 const User = require('../models/User')
 
+// Formulario de login
 router.get('/users/signin', (req, res) => {
 	res.render('users/signin')
 })
+
+// Recibe los datos del formulario de login y autenticamos
+router.post('/users/signin', passport.authenticate('local', { // Llamamos a la funcion del autenticar
+	successRedirect: '/notes', // Si todo fue correcto, redireccionamos a notes
+	failureRedirect: '/users/signin', // Si hubo un error, redireccionamos al login
+	failureFlash: true // Para poder enviar mensajes de flash
+}))
 
 // Formulario de registro
 router.get('/users/signup', (req, res) => {
