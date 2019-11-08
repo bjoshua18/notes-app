@@ -29,15 +29,16 @@ router.post('/notes/new-note', isAuthenticated, async (req, res) => {
 	// Si todo va bien
 	else {
 		const newNote = new Note({ title, description }) // Crea un objeto Note
+		newNote.user = req.user.id
 		await newNote.save(); // Guarda los datos
 		req.flash('success_msg', 'Note Added Successfully') // Nombre de la alerta y el mensaje
 		res.redirect('/notes') // Redireccionamos para ver todas las notas
 	}
 })
 
-// Mostrar todas las notas
+// Mostrar todas las notas del usuario
 router.get('/notes', isAuthenticated, async (req, res) => {
-	const notes = await	Note.find().sort({date: 'desc'}) // Obtenemos todas las notas
+	const notes = await	Note.find({user: req.user.id}).sort({date: 'desc'}) // Obtenemos todas las notas del usuario
 	res.render('notes/all-notes', { notes }) // Renderizamos la vista con todas las notas
 })
 
